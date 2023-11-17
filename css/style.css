@@ -1,5 +1,5 @@
 body {
-    background: #1e1528;
+    background: #25262b;
     margin: 0;
     font-family: 'Noto Sans', sans-serif;
     font-weight: 500;
@@ -157,7 +157,7 @@ body {
      
 }
 .notMe{
-    background:#212123;
+    background:#17181c;
     color:#fff;
     max-width: 80%;
     font-size: 18px;

@@ -120,12 +120,14 @@ module.sendMsg = function sendMsg() {
     });
 }
 
-// TO RECEIVE MSG
+/// TO RECEIVE MSG
 onChildAdded(ref(db, "messages"), (data) => {
-    if (data.val().sender == sender) {
-        messages.innerHTML += "<div style=justify-content:end class=outer id=" + data.key + "><div id=inner class=me>" + processMessage(data.val().msg) + "<button id=dltMsg onclick=module.dltMsg(" + data.key + ")>X</button></div></div>";
+    const message = data.val();
+
+    if (message.sender == sender) {
+        messages.innerHTML += "<div style=justify-content:end class=outer id=" + data.key + "><div id=inner class=me>" + processMessage(message.msg) + "<button id=dltMsg onclick=module.dltMsg(" + data.key + ")>X</button></div></div>";
     } else {
-        messages.innerHTML += "<div class=outer id=" + data.key + "><div class=notMe> <b class=nameuser>" + data.val().sender + ":</b><br>" + processMessage(data.val().msg) + "</div></div>";
+        messages.innerHTML += "<div class=outer id=" + data.key + "><div class=notMe> <b class=nameuser>" + message.sender + ":</b><br>" + processMessage(message.msg) + "</div></div>";
     }
 
     // Scroll down to the new message
@@ -176,6 +178,10 @@ onChildRemoved(ref(db, "messages"), (data) => {
 // TO DELETE MSG
 module.dltMsg = function dltMsg(key){
     remove(ref(db,"messages/"+key));
+}
+// Function to sort messages by timestamp
+function sortMessagesByTimestamp(messages) {
+    return messages.sort((a, b) => a.timestamp - b.timestamp);
 }
 
 // WHEN MSG IS DELETED
